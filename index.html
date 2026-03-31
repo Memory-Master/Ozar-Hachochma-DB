@@ -172,12 +172,16 @@
     </div>
 
     <script>
-        /* 12. משפטי המגיד החריפים (גרסה מקוצרת לצורך הקוד, ניתן להוסיף את כולם) */
-      // --- חיבור למאגר החיצוני של מ.א.ע ---
+// --- חיבור למאגר של מ.א.ע ---
         const DB_URL = "https://raw.githubusercontent.com/Memory-Master/Ozar-Hachochma-DB/refs/heads/main/data.json"; 
 
         let MASTER_DB = [];
         let JOKES = {};
+
+        // הגדרת כסף ראשונית
+        if (!localStorage.getItem('gold_hall_bal')) {
+            localStorage.setItem('gold_hall_bal', 1000);
+        }
 
         async function loadData() {
             try {
@@ -188,9 +192,10 @@
                 JOKES = data.JOKES;
                 
                 console.log("המאגר נטען בהצלחה!");
-                if (typeof updateUI === "function") updateUI(); 
+                updateUI(); 
             } catch (error) {
-                console.error("שגיאה בחיבור למאגר:", error);
+                console.error("שגיאה בטעינה:", error);
+                updateUI();
             }
         }
 
