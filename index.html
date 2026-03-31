@@ -172,56 +172,19 @@
     </div>
 
     <script>
-// --- חיבור למאגר של מ.א.ע ---
+<script>
+        // --- 1. הגדרות וחיבור למאגר החיצוני ---
         const DB_URL = "https://raw.githubusercontent.com/Memory-Master/Ozar-Hachochma-DB/refs/heads/main/data.json"; 
+        
+        let MASTER_DB = []; // המאגר יתמלא מהקובץ
+        let JOKES = {};    // המגיד יתמלא מהקובץ
 
-        let MASTER_DB = [];
-        let JOKES = {};
+        // הגדרת שם משתנה אחיד לכסף (מניעת $0)
+        const BALANCE_KEY = 'gold_hall_mae_bal';
 
-        // הגדרת כסף ראשונית
-        if (!localStorage.getItem('gold_hall_bal')) {
-            localStorage.setItem('gold_hall_bal', 1000);
-        }
-
-        async function loadData() {
-            try {
-                const response = await fetch(DB_URL);
-                const data = await response.json();
-                
-                MASTER_DB = data.MASTER_DB;
-                JOKES = data.JOKES;
-                
-                console.log("המאגר נטען בהצלחה!");
-                updateUI(); 
-            } catch (error) {
-                console.error("שגיאה בטעינה:", error);
-                updateUI();
-            }
-        }
-
-        loadData();
-
-        /* 13. מאגר שאלות עם רמות קושי (1-קל, 2-בינוני, 3-קשה) */
-        const MASTER_DB = [
-            {q: "מי בנה את התיבה?", a: "נח", w: ["אברהם", "משה", "נמרוד"], lvl: 1, hint: "הוא ניצל מהמבול"},
-            {q: "כמה ימים צרו סביב יריחו?", a: "7", w: ["3", "10", "40"], lvl: 1, hint: "כמניין ימי השבוע"},
-            {q: "מי היה היהודי הראשון?", a: "אברהם", w: ["יצחק", "יעקב", "יהודה"], lvl: 1, hint: "לך לך מארצך..."},
-            {q: "איזה חג נקרא חג האסיף?", a: "סוכות", w: ["פסח", "שבועות", "חנוכה"], lvl: 1, hint: "יושבים בצילה"},
-            {q: "מי הרג את גוליית?", a: "דוד", w: ["שאול", "שמשון", "יהונתן"], lvl: 1, hint: "היה רועה צאן"},
-            {q: "איזה נביא עלה במרכבת אש?", a: "אליהו", w: ["אלישע", "שמואל", "ישעיהו"], lvl: 2, hint: "הוא מגיע לכל ברית"},
-            {q: "כמה בנים היו ליעקב?", a: "12", w: ["10", "7", "13"], lvl: 2, hint: "כמניין השבטים"},
-            {q: "מי הייתה השופטת היחידה?", a: "דבורה", w: ["יעל", "חנה", "רות"], lvl: 2, hint: "ישבה תחת התומר"},
-            {q: "מי היה שר הצבא של שאול?", a: "אבנר בן נר", w: ["יואב בן צרויה", "עמשא", "בניהו"], lvl: 2, hint: "קרוב משפחתו של שאול"},
-            {q: "באיזו עיר נולד דוד המלך?", a: "בית לחם", w: ["ירושלים", "חברון", "יריחו"], lvl: 2, hint: "אפרתה"},
-            {q: "מי היה שר הצבא של דוד המלך?", a: "יואב בן צרויה", w: ["אבנר", "עמשא", "איתי הגיתי"], lvl: 3, hint: "בן אחותו של דוד"},
-            {q: "כמה שנים מלך דוד בסך הכל?", a: "40", w: ["33", "7", "50"], lvl: 3, hint: "מספר עגול ומקודש"},
-            {q: "מי בנה את בית המקדש הראשון?", a: "שלמה", w: ["דוד", "חזקיהו", "יואש"], lvl: 3, hint: "החכם באדם"},
-            {q: "באיזה הר מת משה רבנו?", a: "נבו", w: ["סיני", "הור", "המורה"], lvl: 3, hint: "בעבר הירדן"},
-            {q: "מי היה המלך האחרון ביהודה?", a: "צדקיהו", w: ["יהויכין", "יאשיהו", "חזקיהו"], lvl: 3, hint: "עיניו עורו בבבל"}
-        ];
-
+        // יצירת מצב משחק ראשוני
         let state = {
-            balance: parseInt(localStorage.getItem('gold_hall_mae_bal')) || 1000,
+            balance: parseInt(localStorage.getItem(BALANCE_KEY)) || 1000,
             qIdx: 0,
             bet: 0,
             combo: 0,
@@ -230,8 +193,30 @@
             timer: null
         };
 
-        /* 14. מנגנון המגיד */
+        // --- 2. פונקציית טעינת הנתונים (הלב של המשחק) ---
+        async function loadData() {
+            try {
+                console.log("מתחיל טעינת נתונים...");
+                const response = await fetch(DB_URL);
+                const data = await response.json();
+                
+                MASTER_DB = data.MASTER_DB;
+                JOKES = data.JOKES;
+                
+                console.log("המאגר נטען! שאלות:", MASTER_DB.length);
+                updateUI(); 
+            } catch (error) {
+                console.error("שגיאה קריטית בטעינה:", error);
+                // במקרה של שגיאה, נשים נתוני ברירת מחדל כדי שהמשחק לא יקרוס
+                MASTER_DB = [{q: "שגיאת טעינה - בדוק חיבור אינטרנט", a: "הבנתי", w: ["1","2","3"], lvl: 1, hint: ""}];
+                JOKES = { correct: ["אשריך"], wrong: ["כפרת עוונות"], allin: ["הכל על הקופה!"] };
+                updateUI();
+            }
+        }
+
+        // --- 3. לוגיקת המשחק ---
         function talk(type) {
+            if (!JOKES[type]) return;
             const arr = JOKES[type];
             document.getElementById('maggid-text').innerText = arr[Math.floor(Math.random() * arr.length)];
             const box = document.getElementById('maggid-box');
@@ -241,7 +226,7 @@
 
         function updateUI() {
             document.getElementById('ui-balance').innerText = `$${state.balance.toLocaleString()}`;
-            localStorage.setItem('gold_hall_mae_bal', state.balance);
+            localStorage.setItem(BALANCE_KEY, state.balance);
             
             let rank = "תינוק שנשבה 👶";
             if(state.balance > 100000) rank = "תנא דסייעא 👑";
@@ -257,10 +242,20 @@
             startRound();
         }
 
-        /* 15. בניית סיבוב לפי רמות (3 קלות, 4 בינוניות, 3 קשות) */
         function startRound() {
+            // חלוקת רמות: 3 קלות, 4 בינוניות, 3 קשות
             const getByLvl = (l) => MASTER_DB.filter(q => q.lvl === l).sort(() => 0.5 - Math.random());
-            state.roundQuestions = [...getByLvl(1).slice(0,3), ...getByLvl(2).slice(0,4), ...getByLvl(3).slice(0,3)];
+            const easy = getByLvl(1).slice(0,3);
+            const med = getByLvl(2).slice(0,4);
+            const hard = getByLvl(3).slice(0,3);
+            
+            state.roundQuestions = [...easy, ...med, ...hard];
+            
+            if(state.roundQuestions.length < 10) {
+                // הגנה למקרה שאין מספיק שאלות ברמה מסוימת
+                state.roundQuestions = MASTER_DB.sort(() => 0.5 - Math.random()).slice(0,10);
+            }
+
             state.qIdx = 0; state.combo = 0;
             state.lifelines = { fifty: true, hint: true, skip: true };
             renderLifelines();
@@ -287,7 +282,7 @@
             const fill = document.getElementById('timer-fill');
             clearInterval(state.timer);
             state.timer = setInterval(() => {
-                timeLeft -= 0.6; // בערך 16 שניות לשאלה
+                timeLeft -= 0.6;
                 fill.style.width = timeLeft + "%";
                 if(timeLeft <= 0) { clearInterval(state.timer); endRound(false, "אזל הזמן!"); }
             }, 100);
@@ -321,7 +316,6 @@
             }
         }
 
-        /* גלגלי הצלה */
         function use5050() {
             if(!state.lifelines.fifty) return;
             state.lifelines.fifty = false; renderLifelines();
@@ -336,7 +330,8 @@
         function useHint() {
             if(!state.lifelines.hint) return;
             state.lifelines.hint = false; renderLifelines();
-            document.getElementById('maggid-text').innerText = `רמז מרש"י: ${state.roundQuestions[state.qIdx].hint}`;
+            const q = state.roundQuestions[state.qIdx];
+            document.getElementById('maggid-text').innerText = `רמז מרש"י: ${q.hint || "אין רמז הפעם..."}`;
             document.getElementById('maggid-box').style.transform = 'translateY(0)';
             setTimeout(() => document.getElementById('maggid-box').style.transform = 'translateY(-160%)', 5000);
         }
@@ -344,7 +339,9 @@
         function useSkip() {
             if(!state.lifelines.skip) return;
             state.lifelines.skip = false; renderLifelines();
-            state.qIdx++; if(state.qIdx >= 10) endRound(true); else loadQuestion();
+            state.qIdx++; 
+            if(state.qIdx >= 10) endRound(true); 
+            else loadQuestion();
         }
 
         function renderLifelines() {
@@ -360,8 +357,8 @@
             
             const status = document.getElementById('res-status');
             if(win) {
-                let bonus = state.combo >= 8 ? 2.5 : 1;
-                let prize = state.bet * bonus;
+                let bonus = state.combo >= 8 ? 2.5 : 1.5;
+                let prize = Math.floor(state.bet * bonus);
                 state.balance += prize;
                 status.innerText = "ניצחון מלכותי!";
                 status.style.color = "var(--success)";
@@ -373,16 +370,15 @@
                 status.style.color = "var(--fail)";
                 document.getElementById('res-msg').innerText = msg || "הזהב אבד בסיבוב הזה.";
             }
-            
+            updateUI();
             document.getElementById('res-stats').innerHTML = `
                 <p style="font-size: 1.5rem;">רצף (Combo): ${state.combo}</p>
                 <p style="font-size: 1.5rem; color: var(--gold);">יתרה חדשה: $${state.balance.toLocaleString()}</p>
             `;
-            updateUI();
         }
 
         function spawnCoins() {
-            for(let i=0; i<20; i++) {
+            for(let i=0; i<15; i++) {
                 const c = document.createElement('div'); c.className = 'coin'; c.innerText = '💰';
                 c.style.left = Math.random() * 100 + 'vw'; c.style.top = '100vh';
                 document.body.appendChild(c);
@@ -390,10 +386,9 @@
             }
         }
 
-        /* מנגנון מן מהשמיים (בונוס זמן) */
+        // בונוס זמן - מן מהשמיים
         setInterval(() => { state.balance += 1; updateUI(); }, 60000);
 
-        updateUI();
+        // הפעלה ראשונית
+        loadData();
     </script>
-</body>
-</html>
