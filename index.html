@@ -173,12 +173,28 @@
 
     <script>
         /* 12. משפטי המגיד החריפים (גרסה מקוצרת לצורך הקוד, ניתן להוסיף את כולם) */
-        const JOKES = {
-            correct: ["אשריך! כיוונת לדעת גדולים.", "שפתיים יישק! בקיא ורגיל.", "חזק וברוך, סברא ישרה.", "ניכר שעמלת בתורה!", "תשובה ניצחת, ברוך שכיבנת!", "חילך לאורייתא!", "חד וחלק! בור סוד."],
-            wrong: ["אוי, כפרת עוונות... חזור לפרשה.", "נפלת בבור של טעות, היכן העיון?", "אפילו חמורו של פנחס היה נזהר.", "טעות של עם הארץ, חזור לישיבה.", "התבלבלת בין קודש לחול."],
-            allin: ["כל הקופה?! ביטחון של שמשון הגיבור!", "השם יעזור, זה הימור של מאמינים!", "אומץ לב של יהודה המכבי!", "מהמר כמו מלך!"],
-            hint: ["רש\"י לוחש לך: שים לב לדיוק הפסוק.", "הזמן אוזל, השבת בפתח!", "רמז דק כחוט השערה מהמגיד..."]
-        };
+      // --- חיבור למאגר החיצוני של מ.א.ע ---
+        const DB_URL = "https://raw.githubusercontent.com/Memory-Master/Ozar-Hachochma-DB/refs/heads/main/data.json"; 
+
+        let MASTER_DB = [];
+        let JOKES = {};
+
+        async function loadData() {
+            try {
+                const response = await fetch(DB_URL);
+                const data = await response.json();
+                
+                MASTER_DB = data.MASTER_DB;
+                JOKES = data.JOKES;
+                
+                console.log("המאגר נטען בהצלחה!");
+                if (typeof updateUI === "function") updateUI(); 
+            } catch (error) {
+                console.error("שגיאה בחיבור למאגר:", error);
+            }
+        }
+
+        loadData();
 
         /* 13. מאגר שאלות עם רמות קושי (1-קל, 2-בינוני, 3-קשה) */
         const MASTER_DB = [
