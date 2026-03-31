@@ -25,7 +25,7 @@
             color: #fff; display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 1. עמודי אש אנימטיביים */
+        /* עמודי אש */
         .pillar {
             position: absolute; bottom: 0; width: 20vw; height: 100vh;
             background: linear-gradient(0deg, rgba(212, 175, 55, 0.2) 0%, transparent 80%);
@@ -35,7 +35,6 @@
         @keyframes pulse { from { opacity: 0.3; } to { opacity: 0.7; } }
         .pillar-left { left: -10vw; } .pillar-right { right: -10vw; }
 
-        /* 2. עיצוב "המגיד" */
         #maggid-box {
             position: absolute; top: 2vh; width: 85%; max-width: 900px;
             background: rgba(0,0,0,0.95); border: 2px solid var(--main-gold);
@@ -44,7 +43,8 @@
             z-index: 1000; transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             transform: translateY(-160%);
         }
-        #maggid-text { font-size: 1.8rem; font-weight: 800; color: var(--gold); text-shadow: 0 2px 8px #000; }
+        /* הגדלת טקסט המגיד */
+        #maggid-text { font-size: 2.2rem; font-weight: 800; color: var(--gold); text-shadow: 0 2px 8px #000; }
 
         .screen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -53,7 +53,6 @@
         }
         .hidden { display: none !important; transform: scale(0.9); opacity: 0; }
 
-        /* 3. טקסט מוזהב מנצנץ */
         .gold-glow {
             background: linear-gradient(90deg, #d4af37, #fcf6ba, #d4af37, #aa8822);
             background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -61,28 +60,25 @@
         }
         @keyframes gold-move { to { background-position: 300% center; } }
 
-        /* 4. לוח המחוונים של הכסף */
         .balance-container {
             background: var(--glass); border: 1px solid var(--main-gold);
             padding: 20px 40px; border-radius: 100px; margin-bottom: 20px;
             box-shadow: inset 0 0 20px rgba(212,175,55,0.1);
         }
-        .balance-display { font-size: 5rem; line-height: 1; }
+        .balance-display { font-size: 5.5rem; line-height: 1; }
 
-        /* 5. גלגלי הצלה בעיצוב כפתור זכוכית */
         .lifeline-btn {
             background: rgba(255,255,255,0.05); border: 1px solid var(--main-gold);
-            color: var(--gold); padding: 12px 25px; border-radius: 15px;
+            color: var(--gold); padding: 15px 30px; border-radius: 15px;
             cursor: pointer; font-weight: bold; transition: 0.3s; margin: 0 10px;
-            font-size: 1.1rem; text-transform: uppercase;
+            font-size: 1.3rem; text-transform: uppercase;
         }
         .lifeline-btn:hover:not(:disabled) { background: var(--main-gold); color: #000; }
         .lifeline-btn:disabled { opacity: 0.2; cursor: not-allowed; filter: grayscale(1); }
 
-        /* 6. קלפי התשובות */
         .ans-card {
             background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.2);
-            padding: 30px; border-radius: 20px; font-size: 1.8rem; font-weight: 700;
+            padding: 35px; border-radius: 20px; font-size: 2.2rem; font-weight: 700;
             color: #fff; cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative; overflow: hidden; text-align: center;
         }
@@ -90,72 +86,63 @@
         .correct { background: var(--success) !important; color: #000 !important; box-shadow: 0 0 30px var(--success); }
         .wrong { background: var(--fail) !important; box-shadow: 0 0 30px var(--fail); }
 
-        /* 7. פס טיימר מלכותי */
-        #timer-bar { width: 85%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 20px 0; overflow: hidden; }
+        #timer-bar { width: 85%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 25px 0; overflow: hidden; }
         #timer-fill { width: 100%; height: 100%; background: linear-gradient(90deg, var(--dark-gold), var(--gold)); transition: width 0.1s linear; }
 
-        /* 8. כפתורי פעולה */
         .action-btn {
             background: linear-gradient(45deg, var(--dark-gold), var(--gold));
-            border: none; color: #000; font-size: 1.8rem; padding: 15px 50px;
+            border: none; color: #000; font-size: 2rem; padding: 15px 60px;
             border-radius: 50px; font-weight: 900; cursor: pointer;
             transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .action-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
 
-        /* 9. חתימה קבועה - נוצר על ידי מ.א.ע */
         .footer-name {
             position: fixed; bottom: 15px; right: 20px;
-            font-size: 0.85rem; color: rgba(212, 175, 55, 0.5);
+            font-size: 1rem; color: rgba(212, 175, 55, 0.5);
             letter-spacing: 1px; z-index: 100; font-weight: 300;
         }
 
-        /* 10. אנימציות רעידה ומטבעות */
         @keyframes shake { 0%, 100% { transform: translate(0,0); } 25% { transform: translate(-8px, 4px); } 75% { transform: translate(8px, -4px); } }
         .shake { animation: shake 0.12s 4; }
-        .coin { position: absolute; font-size: 35px; pointer-events: none; z-index: 1000; }
+        .coin { position: absolute; font-size: 40px; pointer-events: none; z-index: 1000; }
         
-        #combo-tag { font-size: 2rem; color: #FFD700; text-shadow: 0 0 15px orange; font-weight: 900; opacity: 0; }
+        #combo-tag { font-size: 2.5rem; color: #FFD700; text-shadow: 0 0 15px orange; font-weight: 900; opacity: 0; }
     </style>
 </head>
 <body>
     <div class="pillar pillar-left"></div><div class="pillar pillar-right"></div>
-    
     <div class="footer-name">נוצר על ידי מ.א.ע</div>
-    
     <div id="maggid-box"><div id="maggid-text"></div></div>
 
     <div class="screen" id="bet-screen">
-        <div id="rank-display" style="border: 1px solid var(--main-gold); padding: 8px 25px; border-radius: 50px; color: var(--gold); margin-bottom: 15px; font-weight: 700;">טוען דרגה...</div>
+        <div id="rank-display" style="font-size: 1.5rem; border: 1px solid var(--main-gold); padding: 10px 30px; border-radius: 50px; color: var(--gold); margin-bottom: 20px; font-weight: 700;">טוען...</div>
         <div class="balance-container">
             <div class="balance-display gold-glow" id="ui-balance">$0</div>
         </div>
-        <div style="margin: 20px 0; font-size: 1.8rem; font-weight: 300;">קבע את סכום ההימור לסיבוב:</div>
+        <div style="margin: 20px 0; font-size: 2.2rem; font-weight: 300;">קבע את סכום ההימור:</div>
         <div style="display: flex; gap: 20px;">
             <button class="action-btn" onclick="prepBet(100)">$100</button>
             <button class="action-btn" onclick="prepBet(500)">$500</button>
             <button class="action-btn" onclick="prepBet('ALL')" style="background: #fff; color: #000;">ALL-IN</button>
         </div>
-        <div id="manna-timer" style="margin-top: 30px; color: #888; font-size: 1rem;">מן מהשמיים: +$1 בכל דקה</div>
+        <div id="manna-timer" style="margin-top: 35px; color: #888; font-size: 1.2rem;">מן מהשמיים: +$1 בכל דקה</div>
     </div>
 
     <div class="screen hidden" id="game-screen">
         <div style="display: flex; justify-content: space-between; width: 85%; align-items: center;">
             <div id="combo-tag">COMBO 🔥</div>
-            <div id="q-progress" style="font-size: 1.8rem; color: var(--main-gold); font-weight: 800;">שאלה 1/10</div>
+            <div id="q-progress" style="font-size: 2.2rem; color: var(--main-gold); font-weight: 800;">שאלה 1/10</div>
         </div>
-        
         <div id="timer-bar"><div id="timer-fill"></div></div>
-
-        <div style="margin-bottom: 30px;">
+        <div style="margin-bottom: 35px;">
             <button class="lifeline-btn" id="life-50" onclick="use5050()">50/50</button>
-            <button class="lifeline-btn" id="life-hint" onclick="useHint()">רמז מהמגיד</button>
-            <button class="lifeline-btn" id="life-skip" onclick="useSkip()">דילוג נביא</button>
+            <button class="lifeline-btn" id="life-hint" onclick="useHint()">רמז</button>
+            <button class="lifeline-btn" id="life-skip" onclick="useSkip()">דילוג</button>
         </div>
-
         <div style="text-align: center; width: 85%; max-width: 1100px;">
-            <div id="q-text" style="font-size: 3.2rem; font-weight: 800; margin-bottom: 4vh; line-height: 1.2;"></div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" id="options-container">
+            <div id="q-text" style="font-size: 3.8rem; font-weight: 800; margin-bottom: 5vh; line-height: 1.2;"></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;" id="options-container">
                 <div class="ans-card" id="opt-0" onclick="checkAns(0)"></div>
                 <div class="ans-card" id="opt-1" onclick="checkAns(1)"></div>
                 <div class="ans-card" id="opt-2" onclick="checkAns(2)"></div>
@@ -166,53 +153,39 @@
 
     <div class="screen hidden" id="result-screen">
         <div id="res-status" style="font-size: 8rem; font-weight: 900;"></div>
-        <div id="res-msg" style="font-size: 2.5rem; margin-bottom: 30px;"></div>
-        <div id="res-stats" style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; margin-bottom: 30px; min-width: 300px; text-align: center;"></div>
+        <div id="res-msg" style="font-size: 3rem; margin-bottom: 35px;"></div>
+        <div id="res-stats" style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; margin-bottom: 35px; min-width: 350px; text-align: center; font-size: 1.8rem;"></div>
         <button class="action-btn" onclick="location.reload()">חזור להיכל</button>
     </div>
-<script>
-        // --- 1. הגדרות וחיבור למאגר החיצוני ---
-        const DB_URL = "https://raw.githubusercontent.com/Memory-Master/Ozar-Hachochma-DB/refs/heads/main/data.json"; 
-        
-        let MASTER_DB = []; // המאגר יתמלא מהקובץ
-        let JOKES = {};    // המגיד יתמלא מהקובץ
 
-        // הגדרת שם משתנה אחיד לכסף (מניעת $0)
+    <script>
+        const DB_URL = "https://raw.githubusercontent.com/Memory-Master/Ozar-Hachochma-DB/refs/heads/main/data.json"; 
+        let MASTER_DB = [];
+        let JOKES = {};
         const BALANCE_KEY = 'gold_hall_mae_bal';
 
-        // יצירת מצב משחק ראשוני
         let state = {
             balance: parseInt(localStorage.getItem(BALANCE_KEY)) || 1000,
-            qIdx: 0,
-            bet: 0,
-            combo: 0,
+            qIdx: 0, bet: 0, combo: 0,
             roundQuestions: [],
             lifelines: { fifty: true, hint: true, skip: true },
             timer: null
         };
 
-        // --- 2. פונקציית טעינת הנתונים (הלב של המשחק) ---
         async function loadData() {
             try {
-                console.log("מתחיל טעינת נתונים...");
                 const response = await fetch(DB_URL);
                 const data = await response.json();
-                
                 MASTER_DB = data.MASTER_DB;
                 JOKES = data.JOKES;
-                
-                console.log("המאגר נטען! שאלות:", MASTER_DB.length);
-                updateUI(); 
-            } catch (error) {
-                console.error("שגיאה קריטית בטעינה:", error);
-                // במקרה של שגיאה, נשים נתוני ברירת מחדל כדי שהמשחק לא יקרוס
-                MASTER_DB = [{q: "שגיאת טעינה - בדוק חיבור אינטרנט", a: "הבנתי", w: ["1","2","3"], lvl: 1, hint: ""}];
-                JOKES = { correct: ["אשריך"], wrong: ["כפרת עוונות"], allin: ["הכל על הקופה!"] };
+                updateUI();
+            } catch (e) {
+                console.error(e);
+                MASTER_DB = [{q:"שגיאת טעינה", a:"תיקון", w:["1","2","3"], lvl:1}];
                 updateUI();
             }
         }
 
-        // --- 3. לוגיקת המשחק ---
         function talk(type) {
             if (!JOKES[type]) return;
             const arr = JOKES[type];
@@ -225,12 +198,11 @@
         function updateUI() {
             document.getElementById('ui-balance').innerText = `$${state.balance.toLocaleString()}`;
             localStorage.setItem(BALANCE_KEY, state.balance);
-            
-            let rank = "תינוק שנשבה 👶";
-            if(state.balance > 100000) rank = "תנא דסייעא 👑";
-            else if(state.balance > 25000) rank = "הארי שבחבורה 🦁";
-            else if(state.balance > 5000) rank = "בעל קורא 📜";
-            document.getElementById('rank-display').innerText = rank;
+            let r = "תינוק שנשבה 👶";
+            if(state.balance > 100000) r = "תנא דסייעא 👑";
+            else if(state.balance > 25000) r = "הארי שבחבורה 🦁";
+            else if(state.balance > 5000) r = "בעל קורא 📜";
+            document.getElementById('rank-display').innerText = r;
         }
 
         function prepBet(amt) {
@@ -241,19 +213,9 @@
         }
 
         function startRound() {
-            // חלוקת רמות: 3 קלות, 4 בינוניות, 3 קשות
-            const getByLvl = (l) => MASTER_DB.filter(q => q.lvl === l).sort(() => 0.5 - Math.random());
-            const easy = getByLvl(1).slice(0,3);
-            const med = getByLvl(2).slice(0,4);
-            const hard = getByLvl(3).slice(0,3);
-            
-            state.roundQuestions = [...easy, ...med, ...hard];
-            
-            if(state.roundQuestions.length < 10) {
-                // הגנה למקרה שאין מספיק שאלות ברמה מסוימת
-                state.roundQuestions = MASTER_DB.sort(() => 0.5 - Math.random()).slice(0,10);
-            }
-
+            const getL = (l) => MASTER_DB.filter(q => q.lvl === l).sort(() => 0.5 - Math.random());
+            state.roundQuestions = [...getL(1).slice(0,3), ...getL(2).slice(0,4), ...getL(3).slice(0,3)];
+            if(state.roundQuestions.length < 10) state.roundQuestions = MASTER_DB.slice(0,10);
             state.qIdx = 0; state.combo = 0;
             state.lifelines = { fifty: true, hint: true, skip: true };
             renderLifelines();
@@ -266,23 +228,20 @@
             const q = state.roundQuestions[state.qIdx];
             document.getElementById('q-progress').innerText = `שאלה ${state.qIdx + 1}/10`;
             document.getElementById('q-text').innerText = q.q;
-            
             let opts = [q.a, ...q.w].sort(() => 0.5 - Math.random());
             for(let i=0; i<4; i++) {
-                const card = document.getElementById(`opt-${i}`);
-                card.innerText = opts[i]; card.className = 'ans-card'; card.style.display = 'block';
+                const c = document.getElementById(`opt-${i}`);
+                c.innerText = opts[i]; c.className = 'ans-card'; c.style.display = 'block';
             }
             startTimer();
         }
 
         function startTimer() {
-            let timeLeft = 100;
-            const fill = document.getElementById('timer-fill');
+            let t = 100; const fill = document.getElementById('timer-fill');
             clearInterval(state.timer);
             state.timer = setInterval(() => {
-                timeLeft -= 0.6;
-                fill.style.width = timeLeft + "%";
-                if(timeLeft <= 0) { clearInterval(state.timer); endRound(false, "אזל הזמן!"); }
+                t -= 0.6; fill.style.width = t + "%";
+                if(t <= 0) { clearInterval(state.timer); endRound(false, "אזל הזמן!"); }
             }, 100);
         }
 
@@ -290,38 +249,23 @@
             clearInterval(state.timer);
             const q = state.roundQuestions[state.qIdx];
             const card = document.getElementById(`opt-${idx}`);
-            
             if(card.innerText === q.a) {
-                card.classList.add('correct');
-                state.combo++;
-                spawnCoins();
-                talk('correct');
+                card.classList.add('correct'); state.combo++; spawnCoins(); talk('correct');
                 if(state.combo >= 6) document.getElementById('combo-tag').style.opacity = 1;
-                
-                setTimeout(() => {
-                    state.qIdx++;
-                    if(state.qIdx >= 10) endRound(true);
-                    else loadQuestion();
-                }, 1200);
+                setTimeout(() => { state.qIdx++; if(state.qIdx >= 10) endRound(true); else loadQuestion(); }, 1200);
             } else {
-                card.classList.add('wrong');
-                document.body.classList.add('shake');
-                talk('wrong');
-                setTimeout(() => {
-                    document.body.classList.remove('shake');
-                    endRound(false);
-                }, 1200);
+                card.classList.add('wrong'); document.body.classList.add('shake'); talk('wrong');
+                setTimeout(() => { document.body.classList.remove('shake'); endRound(false); }, 1200);
             }
         }
 
         function use5050() {
             if(!state.lifelines.fifty) return;
             state.lifelines.fifty = false; renderLifelines();
-            const q = state.roundQuestions[state.qIdx];
-            let removed = 0;
-            for(let i=0; i<4; i++) {
-                let card = document.getElementById(`opt-${i}`);
-                if(card.innerText !== q.a && removed < 2) { card.style.display = 'none'; removed++; }
+            const q = state.roundQuestions[state.qIdx]; let rem = 0;
+            for(let i=0; i<4; i++){
+                let c = document.getElementById(`opt-${i}`);
+                if(c.innerText !== q.a && rem < 2) { c.style.display = 'none'; rem++; }
             }
         }
 
@@ -329,7 +273,7 @@
             if(!state.lifelines.hint) return;
             state.lifelines.hint = false; renderLifelines();
             const q = state.roundQuestions[state.qIdx];
-            document.getElementById('maggid-text').innerText = `רמז מרש"י: ${q.hint || "אין רמז הפעם..."}`;
+            document.getElementById('maggid-text').innerText = `רמז: ${q.hint || "תחשוב טוב..."}`;
             document.getElementById('maggid-box').style.transform = 'translateY(0)';
             setTimeout(() => document.getElementById('maggid-box').style.transform = 'translateY(-160%)', 5000);
         }
@@ -337,9 +281,7 @@
         function useSkip() {
             if(!state.lifelines.skip) return;
             state.lifelines.skip = false; renderLifelines();
-            state.qIdx++; 
-            if(state.qIdx >= 10) endRound(true); 
-            else loadQuestion();
+            state.qIdx++; if(state.qIdx >= 10) endRound(true); else loadQuestion();
         }
 
         function renderLifelines() {
@@ -352,27 +294,18 @@
             clearInterval(state.timer);
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
-            
-            const status = document.getElementById('res-status');
+            const s = document.getElementById('res-status');
             if(win) {
-                let bonus = state.combo >= 8 ? 2.5 : 1.5;
-                let prize = Math.floor(state.bet * bonus);
-                state.balance += prize;
-                status.innerText = "ניצחון מלכותי!";
-                status.style.color = "var(--success)";
-                document.getElementById('res-msg').innerText = `הרווחת $${prize.toLocaleString()}`;
+                let p = Math.floor(state.bet * (state.combo >= 8 ? 2.5 : 1.5));
+                state.balance += p; s.innerText = "ניצחון!"; s.style.color = "var(--success)";
+                document.getElementById('res-msg').innerText = `הרווחת $${p.toLocaleString()}`;
             } else {
-                state.balance -= state.bet;
-                if(state.balance <= 0) state.balance = 500;
-                status.innerText = "כפרת עוונות...";
-                status.style.color = "var(--fail)";
-                document.getElementById('res-msg').innerText = msg || "הזהב אבד בסיבוב הזה.";
+                state.balance -= state.bet; if(state.balance <= 0) state.balance = 500;
+                s.innerText = "הפסדת..."; s.style.color = "var(--fail)";
+                document.getElementById('res-msg').innerText = msg || "הזהב אבד.";
             }
             updateUI();
-            document.getElementById('res-stats').innerHTML = `
-                <p style="font-size: 1.5rem;">רצף (Combo): ${state.combo}</p>
-                <p style="font-size: 1.5rem; color: var(--gold);">יתרה חדשה: $${state.balance.toLocaleString()}</p>
-            `;
+            document.getElementById('res-stats').innerHTML = `<p>Combo: ${state.combo}</p><p>יתרה: $${state.balance.toLocaleString()}</p>`;
         }
 
         function spawnCoins() {
@@ -384,9 +317,8 @@
             }
         }
 
-        // בונוס זמן - מן מהשמיים
         setInterval(() => { state.balance += 1; updateUI(); }, 60000);
-
-        // הפעלה ראשונית
-        loadData();
+        window.onload = loadData;
     </script>
+</body>
+</html>
